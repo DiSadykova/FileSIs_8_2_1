@@ -7,23 +7,34 @@ using System.IO;
 
 namespace FileSIs_8_2_1
 {
-    internal class Program
+    class Program
     {
         static void Main(string[] args)
         {
-            string directoryAdres = "E:\\Диляра\\Дом Ушковой" ;
-            string[] directories = Directory.GetDirectories(directoryAdres);
-            for (int i = 0; i < directories.Length; i++)
+            string patch = @"E:\Диляра\Апастово";
+            Print(patch, 0);
+            
+            Console.ReadKey();
+        }
+        static void Print(string patch, int level)
+        {
+            string[] dirs = Directory.GetDirectories(patch);
+            string[] files = Directory.GetFiles(patch);
+
+            if (dirs.Count() > 0 || files.Count() > 0)
             {
-                Console.WriteLine(directories[i]);
-                string subDirectoryAdres = directories[i];
-                string[] subDirectories = Directory.GetDirectories(subDirectoryAdres); 
-                for (int j = 0; j < subDirectories.Length; j++)
+                string offset = new string('\t', level);
+                foreach (string s in files)
                 {
-                    Console.WriteLine("     {0}", subDirectories[j]);
+                    
+                    Console.WriteLine(offset+s);
+                }
+                foreach (string s in dirs)
+                {
+                    Console.WriteLine(offset+s);
+                    Print(s, level + 1);
                 }
             }
-            Console.ReadKey();
         }
     }
 }
